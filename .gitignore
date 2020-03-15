@@ -5,3 +5,6 @@
 **/*.jar
 *.zip
 **/.mvn
+**/.settings
+**/.project
+**/.classpath
