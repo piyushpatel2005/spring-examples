@@ -1,13 +1,13 @@
-package com.piyushpatel2005.service.impl;
+package com.piyushpatel2005.ls.service.impl;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.piyushpatel2005.persistence.model.Project;
-import com.piyushpatel2005.persistence.repository.IProjectRepository;
-import com.piyushpatel2005.service.IProjectService;
+import com.piyushpatel2005.ls.persistence.model.Project;
+import com.piyushpatel2005.ls.persistence.repository.IProjectRepository;
+import com.piyushpatel2005.ls.service.IProjectService;
 
 @Service
 public class ProjectServiceImpl implements IProjectService {

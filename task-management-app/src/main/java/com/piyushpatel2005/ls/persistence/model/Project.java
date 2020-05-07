@@ -1,4 +1,4 @@
-package com.piyushpatel2005.persistence.model;
+package com.piyushpatel2005.ls.persistence.model;
 
 import java.time.LocalDate;
 import java.util.Objects;

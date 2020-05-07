@@ -1,8 +1,8 @@
-package com.piyushpatel2005.persistence.repository;
+package com.piyushpatel2005.ls.persistence.repository;
 
 import java.util.Optional;
 
-import com.piyushpatel2005.persistence.model.Project;
+import com.piyushpatel2005.ls.persistence.model.Project;
 
 public interface IProjectRepository {
 

@@ -1,11 +1,11 @@
-package com.piyushpatel2005.persistence.repository.impl;
+package com.piyushpatel2005.ls.persistence.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.piyushpatel2005.persistence.model.Project;
-import com.piyushpatel2005.persistence.repository.IProjectRepository;
+import com.piyushpatel2005.ls.persistence.model.Project;
+import com.piyushpatel2005.ls.persistence.repository.IProjectRepository;
 
 public class ProjectRepositoryImpl implements IProjectRepository {
 
