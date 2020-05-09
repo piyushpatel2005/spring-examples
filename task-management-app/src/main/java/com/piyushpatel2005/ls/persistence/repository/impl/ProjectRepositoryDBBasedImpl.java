@@ -12,12 +12,12 @@ import com.piyushpatel2005.ls.persistence.repository.IProjectRepository;
 
 
 @Repository
-@Profile("prod")
-public class ProjectRepositoryImpl implements IProjectRepository {
+@Profile("dev")
+public class ProjectRepositoryDBBasedImpl implements IProjectRepository {
 
     List<Project> projects = new ArrayList<>();
     
-    public ProjectRepositoryImpl() {
+    public ProjectRepositoryDBBasedImpl() {
         super();
     }
 
@@ -30,7 +30,7 @@ public class ProjectRepositoryImpl implements IProjectRepository {
     @Override
     public Project save(Project project) {
         Project existingProject = findById(project.getId()).orElse(null);
-             
+               
         if(existingProject == null) {
             projects.add(project);
         } else {
