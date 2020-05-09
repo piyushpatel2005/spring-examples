@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-
 import com.piyushpatel2005.ls.persistence.model.Project;
 import com.piyushpatel2005.ls.persistence.repository.IProjectRepository;
 
 
-@Repository
+//@Repository
 public class ProjectRepositoryImpl implements IProjectRepository {
 
 	List<Project> projects = new ArrayList<>();
