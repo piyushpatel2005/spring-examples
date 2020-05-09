@@ -1,6 +1,7 @@
 package com.piyushpatel2005.ls.persistence.model;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public class Project {
 	
@@ -11,6 +12,12 @@ public class Project {
     public Project(Long id, String name, LocalDate dateCreated) {
         super();
         this.id = id;
+        this.name = name;
+        this.dateCreated = dateCreated;
+    }
+    
+    public Project(String name, LocalDate dateCreated) {
+        this.id = new Random().nextLong();
         this.name = name;
         this.dateCreated = dateCreated;
     }
