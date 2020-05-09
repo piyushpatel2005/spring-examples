@@ -3,6 +3,7 @@ package com.piyushpatel2005.ls.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.piyushpatel2005.ls.persistence.model.Project;
@@ -13,6 +14,7 @@ import com.piyushpatel2005.ls.service.IProjectService;
 public class ProjectServiceImplFieldInjection implements IProjectService {
 
     @Autowired
+    @Qualifier("projectRepositoryImpl2")
     private IProjectRepository projectRepository;
     
     @Override
