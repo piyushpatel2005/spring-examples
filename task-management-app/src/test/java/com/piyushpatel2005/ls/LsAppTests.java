@@ -1,4 +1,4 @@
-package com.piyushpatel2005.taskmanagementapp;
+package com.piyushpatel2005.ls;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TaskManagementAppApplicationTests {
+public class LsAppTests {
 
 	@Test
 	public void contextLoads() {
