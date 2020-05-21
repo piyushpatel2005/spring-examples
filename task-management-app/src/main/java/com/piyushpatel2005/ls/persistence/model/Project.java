@@ -3,8 +3,15 @@ package com.piyushpatel2005.ls.persistence.model;
 import java.time.LocalDate;
 import java.util.Random;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Project {
 	
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private LocalDate dateCreated;
@@ -25,6 +32,8 @@ public class Project {
     public Project(Project project) {
         this(project.getId(), project.getName(), project.getDateCreated());
     }
+    
+    public Project() {}
 
     public Long getId() {
         return id;

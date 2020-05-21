@@ -1,20 +1,22 @@
 package com.piyushpatel2005.ls;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.piyushpatel2005.ls.persistence.model.Project;
+import com.piyushpatel2005.ls.service.IProjectService;
 
 @SpringBootApplication()
 public class LsApp {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LsApp.class);
-    
-    @Value("${additional.info}")
-    private String additional;
+    @Autowired
+    private IProjectService projectService;
     
     public static void main(String[] args) {
         SpringApplication.run(LsApp.class, args);
@@ -22,7 +24,11 @@ public class LsApp {
     
     @PostConstruct
     public void postConstruct() {
-        LOG.info("Addditional Property {}", additional);
+        Project project = new Project("My First Project", LocalDate.now());
+        projectService.save(project);
+        
+        Optional<Project> optionalProject = projectService.findById(1L);
+        optionalProject.ifPresent(System.out::println);
     }
     
 }
