@@ -1,5 +1,6 @@
 package com.piyushpatel2005.ls.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.piyushpatel2005.ls.persistence.model.Task;
@@ -22,6 +23,11 @@ public class TaskServiceImpl implements ITaskService {
     @Override
     public Task save(Task project) {
         return taskRepository.save(project);
+    }
+    
+    @Override
+    public Iterable<Task> saveAll(List<Task> tasks) {
+        return taskRepository.saveAll(tasks);
     }
 
 }
