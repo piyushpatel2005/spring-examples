@@ -1,17 +1,12 @@
-package com.piyushpatel2005.ls.persistence.model;
+package com.piyushpatel2005.ls.web.dto;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.piyushpatel2005.ls.persistence.model.TaskStatus;
 
-@Entity
-public class Task {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TaskDto {
+
     private Long id;
     
     private String name;
@@ -24,28 +19,16 @@ public class Task {
     
     private TaskStatus status;
     
-    public Task() {}
+    public TaskDto() {}
 
-    public Task(String name, String description, LocalDate dateCreated, LocalDate dueDate, TaskStatus status) {
+    public TaskDto(Long id, String name, String description, LocalDate dateCreated, LocalDate dueDate, TaskStatus status) {
         super();
-        this.name = name;
-        this.description = description;
-        this.dateCreated = dateCreated;
-        this.dueDate = dueDate;
-        this.status = status;
-    }
-    
-    public Task(String name, String description, LocalDate dateCreated, LocalDate dueDate) {
-        super();
+        this.id = id;
         this.name = name;
         this.description = description;
         this.dateCreated = dateCreated;
         this.dueDate = dueDate;
         this.status = TaskStatus.TO_DO;
-    }
-    
-    public Task(Task task) {
-        this(task.getName(), task.getDescription(), task.getDateCreated(), task.getDueDate());
     }
 
     public Long getId() {
@@ -117,7 +100,7 @@ public class Task {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Task other = (Task) obj;
+        TaskDto other = (TaskDto) obj;
         if (dateCreated == null) {
             if (other.dateCreated != null)
                 return false;
