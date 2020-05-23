@@ -8,11 +8,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 import com.piyushpatel2005.ls.persistence.model.Project;
 
-@Component
+//@Component
 public class TestDataLoader implements ApplicationContextAware {
 
     
