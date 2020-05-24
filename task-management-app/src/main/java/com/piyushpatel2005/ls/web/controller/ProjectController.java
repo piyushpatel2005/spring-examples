@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +74,10 @@ public class ProjectController {
     }
     
     @PostMapping
-    public String addProject(ProjectDto project) {
+    public String addProject(@Valid @ModelAttribute("project") ProjectDto project, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "new-project";
+        }
         projectService.save(convertToEntity(project));
         
         return "redirect:/projects";

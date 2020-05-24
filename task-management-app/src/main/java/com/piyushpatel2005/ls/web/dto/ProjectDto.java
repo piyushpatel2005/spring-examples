@@ -3,11 +3,14 @@ package com.piyushpatel2005.ls.web.dto;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 
 public class ProjectDto {
         
     private Long id;
     
+    @NotBlank
     private String name;
     
     private LocalDate dateCreated;
