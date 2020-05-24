@@ -14,5 +14,9 @@ public interface IProjectService {
 	
 	Iterable<Project> findAll();
 	
+	void delete(Long id);
+	
+	Iterable<Project> findByName(String name);
+	
 	Project addTasks(Project project, List<Task> tasks);
 }

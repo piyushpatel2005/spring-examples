@@ -48,6 +48,16 @@ public class ProjectServiceImpl implements IProjectService {
     }
     
     @Override
+    public void delete(Long id) {
+        projectRepository.deleteById(id);
+    }
+    
+    @Override
+    public Iterable<Project> findByName(String name) {
+        return projectRepository.findByNameContaining(name);
+    }
+    
+    @Override
     public Project addTasks(Project project, List<Task> tasks) {
         project.getTasks().addAll(tasks.stream().filter(t -> !StringUtils.isEmpty(t.getName())).collect(Collectors.toList()));
         
