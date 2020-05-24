@@ -1,8 +1,14 @@
 package com.piyushpatel2005.ls.web.controller;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -15,11 +21,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -35,6 +44,7 @@ public class ProjectControllerIntegrationTest {
     private MockMvc mvc;
 
     private static ObjectWriter writer;
+    private static ObjectReader reader;
 
     @BeforeAll
     public static void mapperSetup() {
@@ -44,35 +54,121 @@ public class ProjectControllerIntegrationTest {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
         writer = mapper.writerFor(ProjectDto.class);
+        reader = mapper.readerFor(ProjectDto.class);
     }
 
     @Test
-    public void givenDefaultProjectsPersisted_whenCreateProject_thenEntityPersisted() throws Exception {
+    public void givenDefaultProjectsPersisted_whenRequestAllProjects_thenRetrieveListWithEntities() throws Exception {
+        // @formatter:off
+        this.mvc.perform(get("/projects"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(2))));
+        // @formatter:on
+    }
+
+    @Test
+    public void givenDefaultProjectsPersisted_whenRequestProjectById_thenRetrieveEntity() throws Exception {
+        // @formatter:off
         this.mvc.perform(get("/projects/1"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is(1)))
             .andExpect(jsonPath("$.name", is("Project 1")));
-        this.mvc.perform(get("/projects/2"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id", is(2)))
-            .andExpect(jsonPath("$.name", is("Project 2")));
+        // @formatter:on
+    }
+
+    @Test
+    public void givenNewProject_whenCreateProject_thenGetEndpointRetrieveEntity() throws Exception {
+        // @formatter:off
+        ProjectDto newProject = new ProjectDto(3L, "new project", LocalDate.now());
+
+        this.mvc.perform(post("/projects").
+                contentType(MediaType.APPLICATION_JSON_UTF8).
+                content(asJsonString(newProject)))
+            .andExpect(status().isCreated());
+        
         this.mvc.perform(get("/projects/3"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.id", is(3)))
-            .andExpect(jsonPath("$.name", is("Project 3")));
-        this.mvc.perform(get("/projects/4"))
-            .andExpect(status().isNotFound());
-
-        ProjectDto newProject = new ProjectDto(null, "new project", LocalDate.now());
-        this.mvc.perform(post("/projects").contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(asJsonString(newProject)))
-            .andExpect(status().isOk())
-            .andReturn();
-
-        this.mvc.perform(get("/projects/4"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id", is(4)))
             .andExpect(jsonPath("$.name", is("new project")));
+        // @formatter:on
+    }
+
+    @Test
+    public void givenDefaultProjectsPersisted_whenUpdateProject_thenGetEndpointRetrieveEntity() throws Exception {
+        // @formatter:off
+        ProjectDto createdProject = createProject();
+        ProjectDto updatedProject = new ProjectDto(createdProject.getId(), "updated project", LocalDate.now());
+        
+        this.mvc.perform(put("/projects/" + createdProject.getId()).
+                contentType(MediaType.APPLICATION_JSON_UTF8).
+                content(asJsonString(updatedProject)))
+            .andExpect(status().isOk());
+        
+        this.mvc.perform(get("/projects/" + createdProject.getId()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id", is(createdProject.getId().intValue())))
+            .andExpect(jsonPath("$.name", is("updated project")));
+        // @formatter:on
+    }
+
+    @Test
+    public void givenNewProject_whenDeleteProject_thenGetEntityRetrieves404() throws Exception {
+        // @formatter:off
+        ProjectDto createdProject = createProject();
+        
+        this.mvc.perform(delete("/projects/" + createdProject.getId()))
+            .andExpect(status().isNoContent());
+        
+        this.mvc.perform(get("/projects/" + createdProject.getId()))
+            .andExpect(status().isNotFound());
+        // @formatter:on
+    }
+    
+    @Test
+    public void whenGetNonExistingProject_thenHandledResponseRetrieved() throws Exception {
+       // @formatter:off
+        this.mvc.perform(delete("/projects/" + Long.MAX_VALUE))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(containsString("Exception retrieving data:")));
+    }
+    
+    @Test
+    public void whenDeleteNonExistingProject_thenHandledResponseRetrieved() throws Exception {
+        // @formatter:off        
+        this.mvc.perform(delete("/projects/" + Long.MAX_VALUE))
+            .andExpect(status().isNotFound())
+            .andExpect(content().string(containsString("Exception retrieving data:")));
+        // @formatter:on
+    }
+
+    @Test
+    public void whenCreateUsingXmlContentType_thenHandledResponseRetrieved() throws Exception {
+        // @formatter:off      
+        this.mvc.perform(post("/projects")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE))
+        .andExpect(status().isUnsupportedMediaType())
+        .andExpect(content().string(containsString("Media Type not supported:")));
+        // @formatter:on
+    }
+
+    private ProjectDto createProject() throws Exception {
+        // @formatter:off
+        ProjectDto newProject = new ProjectDto(null,
+                "new project",
+                LocalDate.now());
+        MvcResult mvcResult = this.mvc.perform(post("/projects").
+                contentType(MediaType.APPLICATION_JSON_UTF8).
+                content(asJsonString(newProject)))
+            .andExpect(status().isCreated()).andReturn();
+        
+        ProjectDto createdProject = reader.readValue(mvcResult.getResponse().getContentAsByteArray());
+        this.mvc.perform(get("/projects/" + createdProject.getId()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id", is(createdProject.getId().intValue())))
+            .andExpect(jsonPath("$.name", is("new project")));
+        
+        return createdProject;
+        // @formatter:on
     }
 
     private static String asJsonString(final Object obj) throws Exception {
