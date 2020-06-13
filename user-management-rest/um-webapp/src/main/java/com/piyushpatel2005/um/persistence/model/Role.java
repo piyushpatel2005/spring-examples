@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.Set;
 
+@Entity
 public class Role implements INameableEntity, INameableDto {
 
   @Id
