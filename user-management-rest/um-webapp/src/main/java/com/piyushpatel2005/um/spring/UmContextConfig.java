@@ -9,13 +9,16 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class UmContextConfig {
 
-  public UmContextConfig () {
-    super();
-  }
+    public UmContextConfig() {
+        super();
+    }
 
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer properties() {
-    final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-    return pspc;
-  }
+    // beans
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer properties() {
+        final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
+        return pspc;
+    }
+
 }

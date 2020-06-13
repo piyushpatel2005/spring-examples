@@ -1,14 +1,14 @@
 package com.piyushpatel2005.um.service.impl;
 
+import com.piyushpatel2005.um.persistence.dao.IUserJpaDao;
+import com.piyushpatel2005.um.persistence.model.User;
+import com.piyushpatel2005.um.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.piyushpatel2005.common.persistence.service.AbstractService;
-import com.piyushpatel2005.um.persistence.dao.IUserJpaDao;
-import com.piyushpatel2005.um.persistence.model.User;
-import com.piyushpatel2005.um.service.IUserService;
 
 @Service
 @Transactional
@@ -27,8 +27,8 @@ public class UserServiceImpl extends AbstractService<User> implements IUserServi
 
     @Override
     @Transactional(readOnly = true)
-    public User findByName(final String name) {
-        return dao.findByName(name);
+    public User findOneByName(final String name) {
+        return dao.findOneByName(name);
     }
 
     // other

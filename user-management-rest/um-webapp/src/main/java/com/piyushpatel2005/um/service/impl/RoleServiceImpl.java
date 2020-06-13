@@ -1,5 +1,7 @@
 package com.piyushpatel2005.um.service.impl;
 
+import com.piyushpatel2005.um.persistence.model.Role;
+import com.piyushpatel2005.um.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
@@ -7,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.piyushpatel2005.common.persistence.service.AbstractService;
 import com.piyushpatel2005.um.persistence.dao.IRoleJpaDao;
-import com.piyushpatel2005.um.persistence.model.Role;
-import com.piyushpatel2005.um.service.IRoleService;
 
 @Service
 @Transactional
@@ -26,8 +26,8 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
     // get/find
 
     @Override
-    public Role findByName(final String name) {
-        return getDao().findByName(name);
+    public Role findOneByName(final String name) {
+        return getDao().findOneByName(name);
     }
 
     // create

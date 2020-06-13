@@ -5,8 +5,8 @@ package com.piyushpatel2005.common.web.exceptions;
  */
 public class ValidationException extends RuntimeException {
 
-  public ValidationException(final String message) {
-    super(message);
-  }
+    public ValidationException(final String message) {
+        super(message);
+    }
 
 }

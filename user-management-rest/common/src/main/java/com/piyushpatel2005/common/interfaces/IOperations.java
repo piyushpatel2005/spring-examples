@@ -5,45 +5,46 @@ import java.util.List;
 
 public interface IOperations<T extends Serializable> {
 
-  // find one
-  T findOne(final long id);
+    // find - one
 
-  /**
-   * - contract: if nothing is found, an empty list will be returned to the calling client <br>
-   */
-  List<T> findAll();
+    T findOne(final long id);
 
-  /**
-   * - contract: if nothing is found, an empty list will be returned to the calling client <br>
-   */
-  List<T> findAllSorted(final String sortBy, final String sortOrder);
+    /**
+     * - contract: if nothing is found, an empty list will be returned to the calling client <br>
+     */
+    List<T> findAll();
 
-  /**
-   * - contract: if nothing is found, an empty list will be returned to the calling client <br>
-   */
-  List<T> findAllPaginated(final int page, final int size);
+    /**
+     * - contract: if nothing is found, an empty list will be returned to the calling client <br>
+     */
+    List<T> findAllSorted(final String sortBy, final String sortOrder);
 
-  /**
-   * - contract: if nothing is found, an empty list will be returned to the calling client <br>
-   */
-  List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
+    /**
+     * - contract: if nothing is found, an empty list will be returned to the calling client <br>
+     */
+    List<T> findAllPaginated(final int page, final int size);
 
-  // create
+    /**
+     * - contract: if nothing is found, an empty list will be returned to the calling client <br>
+     */
+    List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
 
-  T create(final T resource);
+    // create
 
-  // update
+    T create(final T resource);
 
-  void update(final T resource);
+    // update
 
-  // delete
+    void update(final T resource);
 
-  void delete(final long id);
+    // delete
 
-  void deleteAll();
+    void delete(final long id);
 
-  // count
+    void deleteAll();
 
-  long count();
+    // count
+
+    long count();
 
 }

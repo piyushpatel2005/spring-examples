@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.piyushpatel2005.um.persistence.model.User;
+import com.piyushpatel2005.um.service.IUserService;
+import com.piyushpatel2005.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -18,9 +21,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.piyushpatel2005.common.util.QueryConstants;
 import com.piyushpatel2005.common.web.controller.AbstractController;
 import com.piyushpatel2005.common.web.controller.ISortingController;
-import com.piyushpatel2005.um.persistence.model.User;
-import com.piyushpatel2005.um.service.IUserService;
-import com.piyushpatel2005.um.util.UmMappings;
 
 @Controller
 @RequestMapping(value = UmMappings.USERS)

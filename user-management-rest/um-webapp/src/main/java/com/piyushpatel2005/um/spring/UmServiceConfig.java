@@ -7,7 +7,10 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({ "com.piyushpatel2005.um.service" })
 public class UmServiceConfig {
 
-  public UmServiceConfig() {
-    super();
-  }
+    public UmServiceConfig() {
+        super();
+    }
+
+    // beans
+
 }
